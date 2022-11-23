@@ -4,11 +4,10 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('<str:a>/<str:b>/<str:c>/', views.index),
-    path('<str:a>/<str:b>/<str:c>/forecast.png', views.index),
+    path('forecast_result', views.index),
 ]
 
 if settings.DEBUG:
-        urlpatterns += static(settings.MEDIA_URL,
-                              document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
 

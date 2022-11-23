@@ -1,10 +1,14 @@
 import datetime
+import re
+from matplotlib.ticker import MaxNLocator
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import warnings
 from statsmodels.tsa.statespace.sarimax import SARIMAX
+import os
+from matplotlib import rcParams
 
 
 def create_graf(a, b, this_color):
@@ -20,7 +24,7 @@ def create_graf(a, b, this_color):
     this_value = (ending_date - starting_date).days + 1
     #this_color = input('Введите цвет графика (red, green, black, yellow, blue)\n')
     train_data = pd.read_csv('./functional_part/bitcoin.csv')
-
+    #train_data = pd.read_csv('bitcoin.csv')
     first = train_data['<CLOSE>'].values
     second = train_data['<DATE>'].values
     train_data['<DATE>'] = pd.to_datetime(train_data['<DATE>'], format='%Y%m%d')
@@ -56,10 +60,37 @@ def create_graf(a, b, this_color):
     date_list = [starting_date + datetime.timedelta(days=x) for x in range(this_value)]
     new_data['Date'] = np.array(date_list).tolist()
     new_data['Close'] = np.array(predictions).tolist()
+    ax = sns.lineplot(data=new_data, x="Date", y="Close", color=this_color)
+    rcParams['figure.figsize'] = 11.7, 10
+    sns.set_style("darkgrid", {
+        "ytick.major.size": 0.1,
+        "ytick.minor.size": 0.05,
+        'grid.linestyle': '--'
+    })
+    ax.set_xticklabels(ax.get_xticklabels(), rotation=30)
 
-    sns.lineplot(data=new_data, x="Date", y="Close", color=this_color)
-    sns.set(style="darkgrid")
-    plt.grid()
-    plt.savefig('forecast.png')
+    # plt.grid(True)
+    # plt.rcParams['figure.figsize'] = (14, 7)
+    # plt.rcParams['font.size'] = '10'
+    # plt.subplots_adjust(wspace=0, hspace=0)
+    # plt.gca().xaxis.set_major_locator(MaxNLocator(prune='lower'))
     #plt.show()
+    #lolkek = ''
+    #mass = os.listdir(path='G:/Games/architecture_project/functional_part')
+    # mass = os.listdir(path='./media')
+    # for x in mass:
+    #     if x.startswith('forecast'):
+    #         lolkek = re.findall(r'\d+', x, flags=re.ASCII)
+    # if not lolkek:
+    #     plt.savefig('./media/forecast1.png', dpi=1000)
+    #     return 'forecast1.png'
+    # else:
+    #     my_number = int(lolkek[0]) + 1
+    #     plt.savefig(f'./media/forecast{my_number}.png', dpi=1000)
+    #     return f'forecast{my_number}.png'
+    plt.savefig(f'./media/forecast.png', dpi=1000)
+    plt.clf()
+    return 'forecast.png'
 
+
+# create_graf('2022-11-20', '2022-12-25', 'red')

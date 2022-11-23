@@ -1,17 +1,22 @@
 import mimetypes
 import os
+from PIL import Image
+import PIL
+from django.core.files import File
 
 from django.shortcuts import render
 from django.http import HttpResponse, FileResponse
 # Create your views here.
 import functional_part
+from seaborn_and_AI_app.models import Grafic
 
 
-def index(request, a, b, c):
-    functional_part.create_graf(a, b, c)
-
-    # response = FileResponse(open('forecast.png', 'rb'))
-    # return HttpResponse(response)
-    return render(request, './seaborn_and_AI_app/result.html')
-    #return HttpResponse('<a href="./forecast.png" download><img src="./forecast.png" alt="download graf"/></a>',
-                        #content_type="text/html", charset="utf-8")
+def index(request):
+    a = request.GET.get('a')
+    b = request.GET.get('b')
+    c = request.GET.get('c')
+    fig_name = functional_part.create_graf(a, b, c)
+    context = {
+        'name': fig_name
+    }
+    return render(request, './seaborn_and_AI_app/result.html', context)
