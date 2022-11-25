@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'seaborn_and_AI_app',
+    'rest_framework',
+    'api'
 ]
 
 MIDDLEWARE = [

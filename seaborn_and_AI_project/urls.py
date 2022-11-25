@@ -19,4 +19,5 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('func_app/', include('seaborn_and_AI_app.urls')),
+    path('api/', include('api.urls')),
 ]
