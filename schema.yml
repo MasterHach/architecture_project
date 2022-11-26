@@ -1,0 +1,50 @@
+openapi: 3.0.3
+info:
+  title: Forecasting API
+  version: 1.0.1
+  description: API that forecast bitcoin
+paths:
+  /api/:
+    get:
+      operationId: api_retrieve
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForecastingSerializers'
+          description: ''
+components:
+  schemas:
+    ForecastingSerializers:
+      type: object
+      properties:
+        first_date:
+          type: string
+          format: date-time
+        last_date:
+          type: string
+          format: date-time
+        color:
+          type: string
+        file_way:
+          type: string
+      required:
+      - color
+      - file_way
+      - first_date
+      - last_date
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
