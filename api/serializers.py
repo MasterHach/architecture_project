@@ -6,3 +6,4 @@ class ForecastingSerializers(serializers.Serializer):
     last_date = serializers.DateTimeField()
     color = serializers.CharField()
     file_way = serializers.CharField()
+    #byte_code = serializers.CharField()

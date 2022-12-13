@@ -3,7 +3,7 @@ from . import views
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 urlpatterns = [
-    path('', views.ForecastingView.as_view()),
+    path('', views.ForecastingView.as_view(), name='forecast'),
     path('schema/', SpectacularAPIView.as_view(), name='schema'),
     path(
         'docs/',

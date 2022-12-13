@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+   app:
+      build: .
+      container_name: django_app
+      env_file:
+         - .env
+      restart: always
+      ports:
+         - "80:8000"
+      volumes:
+         - media_files:${MEDIA_ROOT}
+
+volumes:
+   media_files:

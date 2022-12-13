@@ -5,4 +5,5 @@ matplotlib~=3.6.2
 seaborn~=0.12.1
 statsmodels~=0.13.5
 djangorestframework~=3.14.0
+drf-spectacular==0.24.2
 Pillow~=9.3.0

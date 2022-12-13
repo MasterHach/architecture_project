@@ -1,3 +1,4 @@
+import base64
 import datetime
 import re
 from matplotlib.ticker import MaxNLocator
@@ -13,14 +14,21 @@ from matplotlib import rcParams
 
 def create_graf(a, b, this_color):
     this_day = datetime.datetime.today().date()
-    #a = input("Введите дату начала прогноза (yyyy-mm-dd)\n")
-    starting_date = datetime.datetime.strptime(a, '%Y-%m-%d').date()
-    #b = input("Введите дату конца прогноза (yyyy-mm-dd)\n")
-    ending_date = datetime.datetime.strptime(b, '%Y-%m-%d').date()
+    try:
+        starting_date = datetime.datetime.strptime(a, '%Y-%m-%d').date()
+    except ValueError:
+        return "your starting_date is not suit for %Y-%m-%d"
+    try:
+        ending_date = datetime.datetime.strptime(b, '%Y-%m-%d').date()
+    except ValueError:
+        return "your ending_date is not suit for %Y-%m-%d"
     if ending_date < starting_date:
-        print('Введите даты нормально')
-    if this_day > starting_date:
-        print('прогноз на БУДУЩЕЕ! на прошлое сам ищи в ИНТЕРНЕТЕ')
+        return 'starting date can not be more than ending date'
+    try:
+        sns.lineplot(data=[0, 1, 2, 4], color=this_color)
+        plt.clf()
+    except ValueError:
+        return f'{this_color} is not a valid value for color'
     this_value = (ending_date - starting_date).days + 1
     #this_color = input('Введите цвет графика (red, green, black, yellow, blue)\n')
     train_data = pd.read_csv('./functional_part/bitcoin.csv')
@@ -61,7 +69,7 @@ def create_graf(a, b, this_color):
     new_data['Date'] = np.array(date_list).tolist()
     new_data['Close'] = np.array(predictions).tolist()
     ax = sns.lineplot(data=new_data, x="Date", y="Close", color=this_color)
-    rcParams['figure.figsize'] = 11.7, 10
+    rcParams['figure.figsize'] = 10, 7
     sns.set_style("darkgrid", {
         "ytick.major.size": 0.1,
         "ytick.minor.size": 0.05,
@@ -88,7 +96,7 @@ def create_graf(a, b, this_color):
     #     my_number = int(lolkek[0]) + 1
     #     plt.savefig(f'./media/forecast{my_number}.png', dpi=1000)
     #     return f'forecast{my_number}.png'
-    plt.savefig(f'./media/forecast.png', dpi=1000)
+    plt.savefig(f'./media/forecast.png', dpi=300, bbox_inches="tight", facecolor='yellow')
     plt.clf()
     return 'forecast.png'
 

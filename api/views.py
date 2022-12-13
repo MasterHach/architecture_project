@@ -8,7 +8,7 @@ from .models import Forecasting
 from .serializers import ForecastingSerializers
 from functional_part.geneator import create_graf
 from drf_spectacular.utils import extend_schema, OpenApiParameter
-
+import base64
 
 # Create your views here.
 
@@ -44,7 +44,12 @@ class ForecastingView(APIView):
         a = request.GET.get('a')
         b = request.GET.get('b')
         c = request.GET.get('c')
-        create_graf(a, b, c)
+        name = create_graf(a, b, c)
+        if name != 'forecast.png':
+            return Response(f'Error 400. Bad Request: {name}', status=400)
+        # with open('./media/forecast.png', 'rb') as img:
+        #     image_read = img.read()
+        #     res_img = str(base64.b64encode(image_read))
         graphic = Forecasting(a, b, c, f'architecture_project/media/forecast.png')
         serial = ForecastingSerializers(instance=graphic)
         return Response(serial.data)

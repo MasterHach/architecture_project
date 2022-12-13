@@ -9,3 +9,4 @@ class Forecasting:
         self.last_date = b
         self.color = c
         self.file_way = d
+        #self.byte_code = e
