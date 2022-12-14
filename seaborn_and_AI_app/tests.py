@@ -8,12 +8,8 @@ class ForecastingTest(APITestCase):
     def test_forecast_1(self):
         url = reverse('forecast')
         response = self.client.get(url, data={'a': "2022-11-12", 'b': '2022-12-10', 'c': 'red'})
-        self.assertEqual(response.data, {
-            "first_date": "2022-11-12",
-            "last_date": "2022-12-10",
-            "color": "red",
-            "file_way": "architecture_project/media/forecast.png",
-        })
+        self.assertEqual(response.data["byte_code"][0:40],
+            "iVBORw0KGgoAAAANSUhEUgAABtMAAAVwCAYAAAA+")
 
     def test_forecast_2(self):
         url = reverse('forecast')

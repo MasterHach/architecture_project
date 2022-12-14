@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 from .models import Forecasting
 from .serializers import ForecastingSerializers
 from functional_part.geneator import create_graf
+from functional_part.geneator import encode_image
 from drf_spectacular.utils import extend_schema, OpenApiParameter
 import base64
 
@@ -50,6 +51,7 @@ class ForecastingView(APIView):
         # with open('./media/forecast.png', 'rb') as img:
         #     image_read = img.read()
         #     res_img = str(base64.b64encode(image_read))
-        graphic = Forecasting(a, b, c, f'architecture_project/media/forecast.png')
+        enc_name = encode_image('./media/forecast.png')
+        graphic = Forecasting(a, b, c, f'architecture_project/media/forecast.png', enc_name, 'utf-8')
         serial = ForecastingSerializers(instance=graphic)
         return Response(serial.data)

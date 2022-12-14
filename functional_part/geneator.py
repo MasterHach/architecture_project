@@ -101,4 +101,13 @@ def create_graf(a, b, this_color):
     return 'forecast.png'
 
 
+def encode_image(im_path):
+    with open(im_path, 'rb') as file:
+        bfd = file.read()
+        b64_ed = base64.b64encode(bfd)
+        b64msg = b64_ed.decode('utf-8')
+
+        return b64msg
+
+
 # create_graf('2022-11-20', '2022-12-25', 'red')
